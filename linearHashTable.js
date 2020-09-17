@@ -1,3 +1,4 @@
+// Start of: Linear Probing -----------------------------------
 function HashTable(size) {
     this.size = size;
     this.keys = this.initArray(size);
@@ -12,18 +13,20 @@ HashTable.prototype.initArray = function(size) {
     }
     return array;
 }
-// Star of: Double Hashing with Linear Probing ----------------
+
 HashTable.prototype.put = function(key, value) {
     if (this.limit >= this.size) throw 'hash table is full'
 
     var hashedIndex = this.hash(key);
 
+    // Linear probing
     while (this.keys[hashedIndex] != null) {
         hashedIndex++;
 
         hashedIndex = hashedIndex % this.size;
 
     }
+
     this.keys[hashedIndex] = key;
     this.values[hashedIndex] = value;
     this.limit++;
@@ -42,30 +45,21 @@ HashTable.prototype.get = function(key) {
 }
 
 HashTable.prototype.hash = function(key) {
-    if (!Number.isInteger(key)) throw 'must be int'; // check if int
-    return this.secondHash(key);
+    // Check if int
+    if (!Number.isInteger(key)) throw 'must be int';
+    return key % this.size;
 }
 
-HashTable.prototype.secondHash = function(hashedKey) {
-    var R = this.size - 2;
-    return R - hashedKey % R;
-}
-
-
-// End of Algorithm -----------------------------------
-
-// Start of: test dataset -----------------------------------
 var exampletable = new HashTable(13);
-exampletable.put(145, "hello dude");
-exampletable.put(20, "bbb");
-exampletable.put(566, "sunny as f");
+exampletable.put(7, "hi");
+exampletable.put(20, "hello");
+exampletable.put(33, "sunny");
 exampletable.put(46, "weather");
-exampletable.put(5, "wow");
-exampletable.put(82, "fourty");
-exampletable.put(50, "happy");
-exampletable.put(94, "sad");
-exampletable.put(5, "shaun");
-exampletable.put(112, "hashTabkles Rock");
-exampletable.put(94, "sad");
-// Run data-structure ------------------------------------0
-console.log(exampletable);
+exampletable.put(59, "wow");
+exampletable.put(72, "fourty");
+exampletable.put(85, "happy");
+exampletable.put(98, "sad");
+
+
+console.log(exampletable)
+// End of: Linear Probing ------------------------------------0
